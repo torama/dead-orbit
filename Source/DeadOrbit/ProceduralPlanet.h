@@ -12,23 +12,26 @@ class DEADORBIT_API AProceduralPlanet : public AActor
 {
 	GENERATED_BODY()
 
-
-
-	UPROPERTY()
-	UProceduralMeshComponent* ProcMesh;
-
-	void CreateMesh();
-	void CreateQuad(TArray<FVector> Vertices, TArray<int32> Triangles, TArray<FVector2d> UVs, int32 Index);
-
 public:
 	AProceduralPlanet();
+	int32 Resolution;
+	FVector LocalUp;
+	FVector AxisA;
+	FVector AxisB;
+	int32 PlanetRadius;
 
 protected:
-	UPROPERTY(EditAnywhere)
-	UMaterialInterface* Material;
-
 	virtual void BeginPlay() override;
+	void CreateQuad(TArray<FVector> Vertices, TArray<int32> Triangles, TArray<FVector2d> UVs, int32 Index);
+
+	UPROPERTY()
+		UProceduralMeshComponent* ProcMesh;
+	UPROPERTY(EditAnywhere)
+		UMaterialInterface* Material;
+
+	FVector CalculatePointOnPlanet(FVector PointOnPlanet);
 
 public:
 	virtual void Tick(float DeltaTime) override;
+	void CreateMesh(int32 Index, FVector LUp, int32 Res);
 };
